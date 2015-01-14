@@ -247,14 +247,30 @@ public class MovingPlatform extends Player {
 	}		
 	
 	// getters 
-	public int[] hit() {
+	public int[] coords() {
 		location = new int[] {this.x,this.y};
 		return location;
 	}
 	
-	public int[] redim() {
+	public int getX() {
+		return this.x;
+	}
+	
+	public int getY() {
+		return this.y;
+	}
+	
+	public int[] dimensions() {
 		dims = new int[] {this.length, this.height};
 		return dims;	
+	}
+	
+	public int getLength() {
+		return this.length;
+	}
+	
+	public int getHeight() {
+		return this.height;
 	}
 	
 	public Color getCol() {		

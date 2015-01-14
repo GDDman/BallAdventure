@@ -162,17 +162,12 @@ public class Player extends GamePanel {
 			}
 		}
 		
-		//linking portals
-		phits(platform14, platform15);
-		phits(platform15, platform14);
-		phits(platform23, platform24);
-		phits(platform24, platform23);
-		phits(platform34, platform35);
-		phits(platform35, platform34);
-		phits(platform43, platform44);
-		phits(platform44, platform43);
-		phits(platform113, platform114);
-		phits(platform114, platform113);
+		// linking portals
+		twoWayPhits(plats.get(13), plats.get(14));
+		twoWayPhits(plats.get(22), plats.get(23));
+		twoWayPhits(plats.get(33), plats.get(34));
+		twoWayPhits(plats.get(42), plats.get(43));
+		twoWayPhits(plats.get(112), plats.get(113));
 		
 		if (portaled) {
 			
@@ -214,10 +209,15 @@ public class Player extends GamePanel {
 		
 	}
 	
+	public void twoWayPhits(MovingPlatform m, MovingPlatform b) {
+		phits(m,b);
+		phits(b,m);
+	}
+	
 	public void phits (MovingPlatform m, MovingPlatform b) {
 		
-	 	hitdetect = m.hit(); 
-		dimensions = m.redim();
+	 	hitdetect = m.coords(); 
+		dimensions = m.dimensions();
 		colmatch = m.getCol();
 		kill = m.getKill();
 		stick = m.getStick();
@@ -274,13 +274,13 @@ public class Player extends GamePanel {
 						}
 						
 						if (m.returnLink() && !m.returnSide() && !b.returnSide()) {
-							y = b.hit()[1] + b.redim()[1] + r + 1;
-							x = b.hit()[0] + b.redim()[0]/2;
+							y = b.coords()[1] + b.dimensions()[1] + r + 1;
+							x = b.coords()[0] + b.dimensions()[0]/2;
 						}
 						
 						if (m.returnLink() && !m.returnSide() && b.returnSide()) {
-							x = b.hit()[0] - r - 1;
-							y = b.hit()[1] + b.redim()[1]/2;
+							x = b.coords()[0] - r - 1;
+							y = b.coords()[1] + b.dimensions()[1]/2;
 							falling = true;
 							portaled = true;
 							portalstart = true;
@@ -301,14 +301,14 @@ public class Player extends GamePanel {
 						}
 						
 						if (m.returnLink() && !m.returnSide() && !b.returnSide()) {
-							y = b.hit()[1] - r - 1;
-							x = b.hit()[0] + b.redim()[0]/2;
+							y = b.coords()[1] - r - 1;
+							x = b.coords()[0] + b.dimensions()[0]/2;
 							falling = true;
 						}
 						
 						if (m.returnLink() && !m.returnSide() && b.returnSide()) {
-							x = b.hit()[0] + b.redim()[0] + r + 1;
-							y = b.hit()[1] + b.redim()[1]/2;
+							x = b.coords()[0] + b.dimensions()[0] + r + 1;
+							y = b.coords()[1] + b.dimensions()[1]/2;
 							falling = true;
 						}
 					}
@@ -323,14 +323,14 @@ public class Player extends GamePanel {
 							}
 							
 							if (m.returnLink() && m.returnSide() && b.returnSide()) {
-								x = b.hit()[0] + b.redim()[0] + r;
-								y = b.hit()[1] + b.redim()[1]/2;
+								x = b.coords()[0] + b.dimensions()[0] + r;
+								y = b.coords()[1] + b.dimensions()[1]/2;
 								falling = true;
 							}
 							
 							if (m.returnLink() && m.returnSide() && !b.returnSide()) {
-								y = b.hit()[1] - r;
-								x = b.hit()[0] + b.redim()[0]/2;
+								y = b.coords()[1] - r;
+								x = b.coords()[0] + b.dimensions()[0]/2;
 								falling = true;
 							}
 						}
@@ -346,14 +346,14 @@ public class Player extends GamePanel {
 							}
 							
 							if (m.returnLink() && m.returnSide() && b.returnSide()) {
-								x = b.hit()[0] - r;
-								y = b.hit()[1] + b.redim()[1]/2;
+								x = b.coords()[0] - r;
+								y = b.coords()[1] + b.dimensions()[1]/2;
 								falling = true;
 							}
 							
 							if (m.returnLink() && m.returnSide() && b.returnSide() == false) {
-								y = b.hit()[1] + b.redim()[1] + r;
-								x = b.hit()[0] + b.redim()[0]/2;
+								y = b.coords()[1] + b.dimensions()[1] + r;
+								x = b.coords()[0] + b.dimensions()[0]/2;
 								falling = true;
 							}
 						}
@@ -436,8 +436,8 @@ public class Player extends GamePanel {
 	
 	public void checkTouch(MovingPlatform m) {
 	 	
-		hitdetect = m.hit(); 
-		dimensions = m.redim();
+		hitdetect = m.coords(); 
+		dimensions = m.dimensions();
 		
 		if (x >= hitdetect[0] - r && x <= hitdetect[0] + dimensions[0] + r && y >= hitdetect[1] - r && y <= hitdetect[1] + dimensions[1] + r) {
 			m.touchtrue();
